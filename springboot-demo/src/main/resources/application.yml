@@ -1,0 +1,17 @@
+spring:
+  rabbitmq:
+    addresses: centos7.jqtin.com:5672
+    username: guest
+    password: guest
+    #虚拟host 初始的就为/
+    virtual-host: /
+    publisher-returns: true
+    listener:
+      simple:
+        acknowledge-mode: manual
+        concurrency: 5
+        max-concurrency: 10
+        prefetch: 1
+    template:
+      mandatory: true
+    connection-timeout: 2000
