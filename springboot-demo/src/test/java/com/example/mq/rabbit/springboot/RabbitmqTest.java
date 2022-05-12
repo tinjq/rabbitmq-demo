@@ -28,7 +28,7 @@ public class RabbitmqTest {
             }
         });
 
-        TimeUnit.SECONDS.sleep(1);
+        TimeUnit.SECONDS.sleep(3);
     }
 
 }

@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 
 @Slf4j
 @Component
-public class RabbitReceive {
+public class OrderUpdateReceiver {
 
    /**
     * 组合使用监听
@@ -25,9 +25,9 @@ public class RabbitReceive {
     * @RabbitListener @QueueBinding @Queue @Exchange
     */
    @RabbitListener(bindings = @QueueBinding(
-           value = @Queue(value = RabbitConstant.QUEUE_ORDER_CREATE, durable = "true"),
+           value = @Queue(value = RabbitConstant.QUEUE_ORDER_UPDATE, durable = "true"),
            exchange = @Exchange(name = RabbitConstant.EXCHANGE, durable = "true", type = "topic", ignoreDeclarationExceptions = "true"),
-           key = RabbitConstant.QUEUE_ORDER_CREATE
+           key = RabbitConstant.QUEUE_ORDER_UPDATE
    ))
    @RabbitHandler
    public void onMessage(Message message, Channel channel) throws Exception {
