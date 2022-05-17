@@ -1,5 +1,6 @@
-package com.example.mq.rabbit.tutorial;
+package com.example.mq.rabbit.tutorial.helloworld;
 
+import com.example.mq.rabbit.tutorial.constant.RabbitConstant;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
@@ -13,7 +14,7 @@ public class Recv {
 
     public static void main(String[] argv) throws Exception {
         ConnectionFactory factory = new ConnectionFactory();
-        factory.setHost("centos7.jqtin.com");
+        factory.setHost(RabbitConstant.HOST);
         Connection connection = factory.newConnection();
         Channel channel = connection.createChannel();
 
