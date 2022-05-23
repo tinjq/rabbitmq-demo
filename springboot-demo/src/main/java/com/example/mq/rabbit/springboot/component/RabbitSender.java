@@ -1,8 +1,10 @@
 package com.example.mq.rabbit.springboot.component;
 
+import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.AmqpException;
 import org.springframework.amqp.core.MessagePostProcessor;
+import org.springframework.amqp.core.ReturnedMessage;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.connection.CorrelationData;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -60,6 +62,9 @@ public class RabbitSender {
 
         RabbitTemplate rabbitTemplate = getRabbitTemplate();
         rabbitTemplate.setConfirmCallback(confirmCallback);
+        rabbitTemplate.setReturnsCallback(returnedMessage -> {
+            log.info("--->returnedMessage:{}", JSON.toJSONString(returnedMessage));
+        });
 
         // 	指定业务唯一的iD
         CorrelationData correlationData = new CorrelationData(UUID.randomUUID().toString());
@@ -75,7 +80,7 @@ public class RabbitSender {
         };
 
         rabbitTemplate.convertAndSend(exchange, routingKey, msg, mpp, correlationData);
-
+        rabbitTemplate.waitForConfirms(5000);
     }
 
     public void send(String exchange, String routingKey, Object message, RabbitTemplate.ConfirmCallback confirmCallback) {

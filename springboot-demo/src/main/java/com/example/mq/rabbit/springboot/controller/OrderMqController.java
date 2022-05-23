@@ -27,7 +27,7 @@ public class OrderMqController {
         jsonObject.put("type", "create");
         jsonObject.put("msg", message);
         
-        rabbitSender.send(RabbitConstant.EXCHANGE, RabbitConstant.QUEUE_ORDER_CREATE, jsonObject.toJSONString(), 
+        rabbitSender.send(RabbitConstant.EXCHANGE, RabbitConstant.QUEUE_ORDER_CREATE + "11", jsonObject.toJSONString(),
             (correlationData, ack, cause) -> {
                 if (ack) {
                     try {
